@@ -1,5 +1,6 @@
-from mongoengine import *
 import hashlib
+
+from mongoengine import *
 
 
 class User(Document):
@@ -8,10 +9,6 @@ class User(Document):
     password = StringField(required=True)
     cpf = StringField(required=True, unique=True)
     email = EmailField(required=True, unique=True)
-
-    def save(self):
-        self.password = self.encrypt(self.password, self.username)
-        super().save()
 
     @staticmethod
     def encrypt(password: str, salt: str = None) -> str:
