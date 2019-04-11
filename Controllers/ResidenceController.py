@@ -1,9 +1,44 @@
 from typing import List
 
+from bson import json_util
+
 from Models.Residence import Residence
 
 
-def get_residences(user_id: str) -> List[Residence]:
+def get_residences(user_id: str, with_city: bool = True, with_type: bool = True) -> List[Residence]:
+    pipeline = []
+    if with_city:
+        pipeline.append({
+            '$lookup': {
+                'from': 'residence_type',
+                'localField': 'type',
+                'foreignField': '_id',
+                'as': 'type'
+            }
+        })
+        pipeline.append({
+            '$unwind': {
+                'path': '$type',
+                'preserveNullAndEmptyArrays': True
+            }
+        })
+    if with_type:
+        pipeline.append({
+            '$lookup': {
+                'from': 'address',
+                'localField': 'address.postal_code',
+                'foreignField': '_id',
+                'as': 'address.postal_code'
+            }
+        })
+        pipeline.append({
+            '$unwind': {
+                'path': '$address.postal_code',
+                'preserveNullAndEmptyArrays': True
+            }
+        })
+    if with_type or with_city:
+        return json_util.dumps(Residence.objects(users=user_id).aggregate(*pipeline))
     return Residence.objects(users=user_id).to_json()
 
 
