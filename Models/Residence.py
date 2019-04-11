@@ -1,8 +1,9 @@
 from mongoengine import *
-from Models.User import User
-from Models.Room import Room
-from Models.ResidenceType import ResidenceType
+
 from Models.Address import Address as Postal_Code
+from Models.ResidenceType import ResidenceType
+from Models.Room import Room
+from Models.User import User
 
 
 class Address(EmbeddedDocument):
@@ -19,3 +20,5 @@ class Residence(Document):
     type = ReferenceField(ResidenceType, reverse_delete_rule=DENY, required=True)
     name = StringField(required=True)
     address = EmbeddedDocumentField(Address, required=True)
+    alias = StringField(required=True, unique=True)
+    icon = StringField()
