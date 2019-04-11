@@ -9,3 +9,4 @@ class Pattern(EmbeddedDocument):
 class SensorType(Document):
     type = StringField(required=True, unique=True)
     patterns = EmbeddedDocumentListField(Pattern, required=True)
+    icon = StringField(required=True)
