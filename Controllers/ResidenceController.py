@@ -50,7 +50,7 @@ def get_residence(_id: str) -> Residence or None:
 def get_residence_by_alias(alias: str, with_city: bool = True, with_type: bool = True,
                            with_rooms: bool = True) -> Residence or None:
     residence = Residence.objects(alias=alias).first()
-    return None if Residence is None else residence.to_json()
+    return None if residence is None else residence.to_json()
 
 
 def edit_residence(_id: str, postal_code: str = None, district: str = None, street: str = '', number: int = -1,
