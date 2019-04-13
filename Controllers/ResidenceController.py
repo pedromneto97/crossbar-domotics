@@ -2,6 +2,7 @@ from typing import List
 
 from bson import json_util
 
+from Domain.MongoDomain import *
 from Models.Residence import Residence
 
 
@@ -49,8 +50,19 @@ def get_residence(_id: str) -> Residence or None:
 
 def get_residence_by_alias(alias: str, with_city: bool = True, with_type: bool = True,
                            with_rooms: bool = True) -> Residence or None:
-    residence = Residence.objects(alias=alias).first()
-    return None if residence is None else residence.to_json()
+    pipeline = []
+    if with_city:
+        pipeline.append(lookup('residence_type', 'type'))
+        pipeline.append(unwind('$type'))
+    if with_type:
+        pipeline.append(lookup('address', 'address.postal_code'))
+        pipeline.append(unwind('$address.postal_code'))
+    if with_rooms:
+        pipeline.append(lookup('room', 'rooms'))
+        pipeline.append(unwind('$rooms'))
+    if with_rooms or with_city or with_type:
+        return json_util.dumps(list(Residence.objects(alias=alias).aggregate(*pipeline))[0])
+    return Residence.objects(users=alias).first().to_json()
 
 
 def edit_residence(_id: str, postal_code: str = None, district: str = None, street: str = '', number: int = -1,
