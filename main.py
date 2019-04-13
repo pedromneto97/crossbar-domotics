@@ -26,13 +26,13 @@
 #
 ###############################################################################
 
+from os import environ
+
+from autobahn.twisted.wamp import ApplicationSession
+from mongoengine import connect
 from twisted.internet.defer import inlineCallbacks
 from twisted.logger import Logger
 
-from autobahn.twisted.wamp import ApplicationSession
-
-from mongoengine import connect
-from os import environ
 from Controllers.ResidenceController import *
 from Controllers.UserController import *
 
@@ -49,3 +49,4 @@ class AppSession(ApplicationSession):
         yield self.register(get_user_by_cpf, '{}.user.cpf'.format(PREFIX))
         yield self.register(get_user, '{}.user.id'.format(PREFIX))
         yield self.register(get_residences, '{}.user.residences'.format(PREFIX))
+        yield self.register(get_residence_by_alias, '{}.residence.alias'.format(PREFIX))
