@@ -1,4 +1,4 @@
-def lookup(from_collection: str, local_field: str, foreign_field: str, as_field: str = None):
+def lookup(from_collection: str, local_field: str, foreign_field: str = '_id', as_field: str = None) -> dict:
     return {
         '$lookup': {
             'from': from_collection,
@@ -9,7 +9,7 @@ def lookup(from_collection: str, local_field: str, foreign_field: str, as_field:
     }
 
 
-def unwind(path: str, preserve_null_and_empty_arrays: bool = True, include_array_index: str = None):
+def unwind(path: str, preserve_null_and_empty_arrays: bool = True, include_array_index: str = None) -> dict:
     uw = {
         '$unwind': {
             'path': path,
