@@ -6,10 +6,10 @@ from Models.Residence import Residence
 
 def get_residences(user_id: str, with_city: bool = True, with_type: bool = True) -> List[Residence]:
     pipeline = []
-    if with_city:
+    if with_type:
         pipeline.append(lookup('residence_type', 'type'))
         pipeline.append(unwind('$type'))
-    if with_type:
+    if with_city:
         pipeline.append(lookup('address', 'address.postal_code'))
         pipeline.append(unwind('$address.postal_code'))
     if with_type or with_city:
@@ -26,11 +26,11 @@ def get_residence_by_alias(alias: str, with_city: bool = True, with_type: bool =
                            with_rooms: bool = True) -> Residence or None:
     pipeline = []
     if with_city:
-        pipeline.append(lookup('residence_type', 'type'))
-        pipeline.append(unwind('$type'))
-    if with_type:
         pipeline.append(lookup('address', 'address.postal_code'))
         pipeline.append(unwind('$address.postal_code'))
+    if with_type:
+        pipeline.append(lookup('residence_type', 'type'))
+        pipeline.append(unwind('$type'))
     if with_rooms:
         pipeline.append(lookup('room', 'rooms'))
         pipeline.append(unwind('$rooms'))
