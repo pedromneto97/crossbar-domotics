@@ -1,5 +1,3 @@
-from typing import List
-
 from bson import json_util
 
 from Domain.MongoDomain import *
@@ -35,6 +33,16 @@ def get_residence_by_alias(alias: str, with_city: bool = True, with_type: bool =
         pipeline.append(unwind('$address.postal_code'))
     if with_rooms:
         pipeline.append(lookup('room', 'rooms'))
+        pipeline.append(unwind('$rooms'))
+        pipeline.append(lookup('room_type', 'rooms.type'))
+        pipeline.append(unwind('$rooms.type'))
+        pipeline.append(group([
+            ('users', '$first', '$users'),
+            ('type', '$first', '$type'),
+            ('name', '$first', '$name'),
+            ('address', '$first', '$address'),
+            ('rooms', '$push', '$rooms')
+        ]))
     if with_rooms or with_city or with_type:
         residence = list(Residence.objects(alias=alias).aggregate(*pipeline))
         return json_util.dumps(residence[0]) if len(residence) > 0 else None
