@@ -34,6 +34,7 @@ from twisted.internet.defer import inlineCallbacks
 from twisted.logger import Logger
 
 from Controllers.ResidenceController import *
+from Controllers.RoomController import *
 from Controllers.UserController import *
 
 PREFIX = 'com.herokuapp.crossbar-pedro'
@@ -50,3 +51,4 @@ class AppSession(ApplicationSession):
         yield self.register(get_user, '{}.user.id'.format(PREFIX))
         yield self.register(get_residences, '{}.user.residences'.format(PREFIX))
         yield self.register(get_residence_by_alias, '{}.residence.alias'.format(PREFIX))
+        yield self.register(get_room_by_alias, '{}.room.alias'.format(PREFIX))
