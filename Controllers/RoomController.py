@@ -17,7 +17,6 @@ def get_room_by_alias(alias: str, with_type: bool = True, with_scenes: bool = Tr
         pipeline.append(group([
             ('type', '$first', '$type'),
             ('name', '$first', '$name'),
-            ('address', '$first', '$address'),
             ('scenes', '$push', '$scenes')
         ]))
     if with_scenes or with_type:
