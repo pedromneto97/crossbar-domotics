@@ -1,4 +1,5 @@
 from mongoengine import *
+
 from Models.RoomType import RoomType
 from Models.Sensor import Sensor
 
@@ -8,3 +9,4 @@ class Room(Document):
     name = StringField(required=True)
     sensors = ListField(ReferenceField(Sensor, reverse_delete_rule=PULL), required=True)
     icon = StringField(required=True)
+    alias = StringField(required=True, unique=True)
