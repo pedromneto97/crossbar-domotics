@@ -38,7 +38,7 @@ def get_residence_by_alias(alias: str, with_city: bool = True, with_type: bool =
         pipeline.append(unwind('$rooms'))
     if with_rooms or with_city or with_type:
         return json_util.dumps(list(Residence.objects(alias=alias).aggregate(*pipeline))[0])
-    return Residence.objects(users=alias).first().to_json()
+    return Residence.objects(alias=alias).first().to_json()
 
 
 def edit_residence(_id: str, postal_code: str = None, district: str = None, street: str = '', number: int = -1,
