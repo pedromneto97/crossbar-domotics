@@ -1,8 +1,9 @@
 from mongoengine import *
-from Models.Sensor import Sensor
+
+from Models.SceneItem import SceneItem
 
 
 class Measurement(document):
     value = IntField(required=True)
     timestamp = DateTimeField(required=True)
-    sensor = ReferenceField(Sensor, reverse_delete_rule=DENY)
+    sensor = ReferenceField(SceneItem, reverse_delete_rule=DENY)
