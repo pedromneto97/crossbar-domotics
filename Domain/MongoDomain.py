@@ -25,7 +25,7 @@ def unwind(path: str, preserve_null_and_empty_arrays: bool = True, include_array
 
 
 # id of the group and list of tuples (field, accumulator, expression)
-def group(tuple_array: List[Tuple[str, str, str]], _id='_id') -> dict:
+def group(tuple_array: List[Tuple[str, str, str]], _id='$_id') -> dict:
     gp = {
         '$group': {
             '_id': _id
