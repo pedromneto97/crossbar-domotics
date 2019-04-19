@@ -10,9 +10,9 @@ def get_room_by_alias(alias: str, with_type: bool = True, with_scenes: bool = Tr
         pipeline.append(lookup('room_type', 'type'))
         pipeline.append(unwind('$type'))
     if with_scenes:
-        pipeline.append(lookup('sensor', 'scenes'))
+        pipeline.append(lookup('scene_item', 'scenes'))
         pipeline.append(unwind('$scenes'))
-        pipeline.append(lookup('sensor_type', 'scenes.type'))
+        pipeline.append(lookup('scene_item_type', 'scenes.type'))
         pipeline.append(unwind('$scenes.type'))
         pipeline.append(group([
             ('type', '$first', '$type'),
