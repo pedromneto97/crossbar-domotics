@@ -33,6 +33,7 @@ from mongoengine import connect
 from twisted.internet.defer import inlineCallbacks
 from twisted.logger import Logger
 
+from Controllers.MeasurementController import *
 from Controllers.ResidenceController import *
 from Controllers.RoomController import *
 from Controllers.UserController import *
@@ -47,8 +48,13 @@ class AppSession(ApplicationSession):
 
     @inlineCallbacks
     def onJoin(self, details):
+        # User
         yield self.register(get_user_by_cpf, '{}.user.cpf'.format(PREFIX))
         yield self.register(get_user, '{}.user.id'.format(PREFIX))
         yield self.register(get_residences, '{}.user.residences'.format(PREFIX))
+        # Residence
         yield self.register(get_residence_by_alias, '{}.residence.alias'.format(PREFIX))
+        # Room
         yield self.register(get_room_by_alias, '{}.room.alias'.format(PREFIX))
+        # Measurement
+        yield self.register(get_last_measurement, '{}.sensor.measurement'.format(PREFIX))
