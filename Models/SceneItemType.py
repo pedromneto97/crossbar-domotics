@@ -10,3 +10,4 @@ class SceneItemType(Document):
     name = StringField(required=True, unique=True)
     type = StringField(required=True, choices=['SENSOR', 'ACTUATOR'])
     patterns = EmbeddedDocumentListField(Pattern, required=True)
+    icon = StringField(required=True)
