@@ -26,60 +26,29 @@
 #
 ###############################################################################
 
+from os import environ
+
+from autobahn.twisted.wamp import ApplicationSession
+from mongoengine import connect
 from twisted.internet.defer import inlineCallbacks
 from twisted.logger import Logger
 
-from autobahn.twisted.util import sleep
-from autobahn.twisted.wamp import ApplicationSession
-from autobahn.wamp.exception import ApplicationError
+from Controllers.ResidenceController import *
+from Controllers.RoomController import *
+from Controllers.UserController import *
+
+PREFIX = 'com.herokuapp.crossbar-pedro'
 
 
 class AppSession(ApplicationSession):
-
     log = Logger()
+
+    connect(host=environ['MONGODB_URI'])
 
     @inlineCallbacks
     def onJoin(self, details):
-
-        # SUBSCRIBE to a topic and receive events
-        #
-        def onhello(msg):
-            self.log.info("event for 'onhello' received: {msg}", msg=msg)
-
-        yield self.subscribe(onhello, 'com.example.onhello')
-        self.log.info("subscribed to topic 'onhello'")
-
-        # REGISTER a procedure for remote calling
-        #
-        def add2(x, y):
-            self.log.info("add2() called with {x} and {y}", x=x, y=y)
-            return x + y
-
-        yield self.register(add2, 'com.example.add2')
-        self.log.info("procedure add2() registered")
-
-        # PUBLISH and CALL every second .. forever
-        #
-        counter = 0
-        while True:
-
-            # PUBLISH an event
-            #
-            yield self.publish('com.example.oncounter', counter)
-            self.log.info("published to 'oncounter' with counter {counter}",
-                          counter=counter)
-            counter += 1
-
-            # CALL a remote procedure
-            #
-            try:
-                res = yield self.call('com.example.mul2', counter, 3)
-                self.log.info("mul2() called with result: {result}",
-                              result=res)
-            except ApplicationError as e:
-                # ignore errors due to the frontend not yet having
-                # registered the procedure we would like to call
-                if e.error != 'wamp.error.no_such_procedure':
-                    raise e
-
-            yield sleep(1)
+        yield self.register(get_user_by_cpf, '{}.user.cpf'.format(PREFIX))
+        yield self.register(get_user, '{}.user.id'.format(PREFIX))
+        yield self.register(get_residences, '{}.user.residences'.format(PREFIX))
+        yield self.register(get_residence_by_alias, '{}.residence.alias'.format(PREFIX))
+        yield self.register(get_room_by_alias, '{}.room.alias'.format(PREFIX))

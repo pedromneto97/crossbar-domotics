@@ -9,3 +9,4 @@ class Room(Document):
     name = StringField(required=True)
     sensors = ListField(ReferenceField(SceneItem, reverse_delete_rule=PULL), required=True)
     icon = StringField(required=True)
+    alias = StringField(required=True, unique=True)
