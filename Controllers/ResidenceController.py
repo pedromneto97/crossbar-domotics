@@ -41,7 +41,8 @@ def get_residence_by_alias(alias: str, with_city: bool = True, with_type: bool =
             ('type', '$first', '$type'),
             ('name', '$first', '$name'),
             ('address', '$first', '$address'),
-            ('rooms', '$push', '$rooms')
+            ('rooms', '$push', '$rooms'),
+            ('alias', '$first', '$alias')
         ]))
     if with_rooms or with_city or with_type:
         residence = list(Residence.objects(alias=alias).aggregate(*pipeline))
