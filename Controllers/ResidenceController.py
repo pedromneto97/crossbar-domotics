@@ -60,3 +60,9 @@ def edit_residence(_id: str, postal_code: str = None, district: str = None, stre
         residence.address.postal_code = postal_code
     if district is not None:
         residence.address.district = district
+
+
+def edit_residence(_id: str, data: str) -> Residence:
+    r = Residence.objects(_id=_id).first()
+    r.from_json(data)
+    r.save()
