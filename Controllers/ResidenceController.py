@@ -66,3 +66,7 @@ def edit_residence(_id: str, data: str) -> Residence:
     r = Residence.objects(_id=_id).first()
     r.from_json(data)
     r.save()
+
+
+def delete_residence(_id: str):
+    Residence.objects(_id=_id).delete()
