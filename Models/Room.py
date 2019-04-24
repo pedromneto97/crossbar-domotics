@@ -7,6 +7,6 @@ from Models.SceneItem import SceneItem
 class Room(Document):
     type = ReferenceField(RoomType, reverse_delete_rule=DENY, required=True)
     name = StringField(required=True)
-    sensors = ListField(ReferenceField(SceneItem, reverse_delete_rule=PULL), required=True, unique=True)
+    scenes = ListField(ReferenceField(SceneItem, reverse_delete_rule=PULL), required=True, unique=True)
     icon = StringField(required=True)
     alias = StringField(required=True, unique=True)
