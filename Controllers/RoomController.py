@@ -3,6 +3,7 @@ from bson import json_util
 from Domain.MongoDomain import *
 from Domain.ResidenceDomain import add_room_to_residence
 from Models.Room import Room
+from Models.SceneItem import SceneItem
 
 
 def get_room_by_alias(alias: str, with_type: bool = True, with_scenes: bool = True) -> Room or None:
@@ -40,4 +41,6 @@ def edit_room(_id: str, data: str):
 
 
 def delete_room(_id: str):
-    Room.objects(_id=_id).delete()
+    r: Room = Room.objects(_id=_id).first()
+    SceneItem.objects(_id__in=r.scenes).delete()
+    r.delete()
