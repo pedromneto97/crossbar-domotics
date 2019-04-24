@@ -62,3 +62,7 @@ def update(id: str = None, username: str = None, name: str = None, password: str
         user.email = email
     user.save()
     return True
+
+
+def delete_user(_id: str):
+    User.objects(_id=_id).delete()
