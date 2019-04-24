@@ -31,3 +31,9 @@ def insert_room(data: str, residence_id: str) -> Room:
     r.save()
     add_room_to_residence(residence_id, r)
     return r
+
+
+def edit_room(_id: str, data: str):
+    r = Room.objects(_id=_id).first()
+    r.from_json(data)
+    r.save()
