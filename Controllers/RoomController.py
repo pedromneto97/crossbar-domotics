@@ -37,3 +37,7 @@ def edit_room(_id: str, data: str):
     r = Room.objects(_id=_id).first()
     r.from_json(data)
     r.save()
+
+
+def delete_room(_id: str):
+    Room.objects(_id=_id).delete()
