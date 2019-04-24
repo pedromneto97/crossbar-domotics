@@ -2,6 +2,7 @@ from bson import json_util
 
 from Domain.MongoDomain import *
 from Models.Residence import Residence
+from Models.User import User
 
 
 def get_residences(user_id: str, with_city: bool = True, with_type: bool = True) -> List[Residence]:
@@ -60,3 +61,8 @@ def edit_residence(_id: str, data: str) -> Residence:
 
 def delete_residence(_id: str):
     Residence.objects(_id=_id).delete()
+
+
+def add_user_to_residence(_id: str, user_id: str):
+    u = User.objects(_id=user_id).first()
+    Residence.objects(_id=_id).update_one(push__users=u)
