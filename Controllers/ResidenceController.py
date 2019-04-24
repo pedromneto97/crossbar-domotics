@@ -52,16 +52,6 @@ def get_residence_by_alias(alias: str, with_city: bool = True, with_type: bool =
     return Residence.objects(alias=alias).first().to_json()
 
 
-def edit_residence(_id: str, postal_code: str = None, district: str = None, street: str = '', number: int = -1,
-                   complement: str = '', users: List[str] = None, rooms: List[str] = None, type: str = '',
-                   name: str = '') -> bool:
-    residence = get_residence(_id)
-    if postal_code is not None:
-        residence.address.postal_code = postal_code
-    if district is not None:
-        residence.address.district = district
-
-
 def edit_residence(_id: str, data: str) -> Residence:
     r = Residence.objects(_id=_id).first()
     r.from_json(data)
