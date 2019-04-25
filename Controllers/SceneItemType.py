@@ -1,3 +1,5 @@
+from bson import json_util
+
 from Models.SceneItemType import SceneItemType
 
 
@@ -14,7 +16,9 @@ def insert_scene_item_type(data: str) -> SceneItemType:
 
 def edit_scene_item_type(_id: str, data: str):
     sit: SceneItemType = SceneItemType.objects(_id=_id).first()
-    sit.from_json(data)
+    data: dict = json_util.loads(data)
+    for key, item in data.items():
+        setattr(sit, key, item)
     sit.save()
 
 
