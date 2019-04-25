@@ -1,6 +1,6 @@
 from bson import json_util
 
-from Models.SceneItemType import SceneItemType
+from Models.SceneItemType import SceneItemType, Pattern
 
 
 def get_scene_item_type_by_type(type: str) -> SceneItemType or None:
@@ -22,6 +22,16 @@ def edit_scene_item_type(_id: str, data: str):
     for key, item in data.items():
         setattr(sit, key, item)
     sit.save()
+
+
+def add_pattern(_id: str, unit: str, name: str):
+    p: Pattern = Pattern(unit=unit, name=name)
+    SceneItemType.objects(_id=_id).update_one(push__patterns=p)
+
+
+def remove_pattern(_id: str, unit: str, name: str):
+    p: Pattern = Pattern(unit=unit, name=name)
+    SceneItemType.objects(_id=_id).update_one(pull__patterns=p)
 
 
 def delete_scene_item_type(_id: str):
