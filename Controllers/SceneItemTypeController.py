@@ -17,6 +17,8 @@ def insert_scene_item_type(data: str) -> SceneItemType:
 def edit_scene_item_type(_id: str, data: str):
     sit: SceneItemType = SceneItemType.objects(_id=_id).first()
     data: dict = json_util.loads(data)
+    if 'patterns' in data:
+        data.pop('patterns')
     for key, item in data.items():
         setattr(sit, key, item)
     sit.save()
