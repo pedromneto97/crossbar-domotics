@@ -54,8 +54,10 @@ def get_residence_by_alias(alias: str, with_city: bool = True, with_type: bool =
 
 
 def edit_residence(_id: str, data: str) -> Residence:
-    r = Residence.objects(_id=_id).first()
-    r.from_json(data)
+    r: Residence = Residence.objects(_id=_id).first()
+    data: dict = json_util.loads(data)
+    for key, item in data.items():
+        setattr(r, key, item)
     r.save()
 
 
