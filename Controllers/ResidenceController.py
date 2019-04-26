@@ -53,6 +53,11 @@ def get_residence_by_alias(alias: str, with_city: bool = True, with_type: bool =
     return Residence.objects(alias=alias).first().to_json()
 
 
+def create_residence(data):
+    r: Residence = Residence.from_json(data)
+    r.save()
+
+
 def edit_residence(_id: str, data: str):
     r: Residence = Residence.objects(_id=_id).first()
     data: dict = json_util.loads(data)
