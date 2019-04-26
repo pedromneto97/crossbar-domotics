@@ -57,4 +57,5 @@ class AppSession(ApplicationSession):
         # Room
         yield self.register(get_room_by_alias, '{}.room.alias'.format(PREFIX))
         # Measurement
-        yield self.register(get_last_measurement, '{}.sensor.measurement'.format(PREFIX))
+        yield self.register(get_last_measurement, '{}.measurement.last'.format(PREFIX))
+        yield self.subscribe(new_measurement, '{}.measurement..create'.format(PREFIX), {'match': 'wildcard'})
