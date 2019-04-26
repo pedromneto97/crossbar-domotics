@@ -71,6 +71,11 @@ class AppSession(ApplicationSession):
         Rooms topics
         """
         yield self.register(get_room_by_alias, '{}.room.alias'.format(PREFIX))
+        # Uses residence ID to listen to new rooms in a residence (Only in create)
+        yield self.subscribe(insert_room, '{}.room..create', format(PREFIX), {'match': 'wildcard'})
+        yield self.subscribe(edit_room, '{}.room..edit', format(PREFIX), {'match': 'wildcard'})
+        yield self.subscribe(delete_room, '{}.room..delete'.format(PREFIX))
+
         # Measurement
         yield self.register(get_last_measurement, '{}.measurement.last'.format(PREFIX))
         yield self.subscribe(new_measurement, '{}.measurement..create'.format(PREFIX), {'match': 'wildcard'})
