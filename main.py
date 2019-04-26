@@ -36,6 +36,7 @@ from twisted.logger import Logger
 from Controllers.MeasurementController import *
 from Controllers.ResidenceController import *
 from Controllers.RoomController import *
+from Controllers.SceneItemController import *
 from Controllers.UserController import *
 
 PREFIX = 'com.herokuapp.crossbar-pedro'
@@ -75,6 +76,13 @@ class AppSession(ApplicationSession):
         yield self.subscribe(insert_room, '{}.room..create', format(PREFIX), {'match': 'wildcard'})
         yield self.subscribe(edit_room, '{}.room..edit', format(PREFIX), {'match': 'wildcard'})
         yield self.subscribe(delete_room, '{}.room..delete'.format(PREFIX))
+
+        """
+        SceneItem topics
+        """
+        yield self.subscribe(insert_scene_item, '{}.scene_item..create'.format(PREFIX), {'match': 'wildcard'})
+        yield self.subscribe(edit_scene_item, '{}.scene_item..edit'.format(PREFIX), {'match': 'wildcard'})
+        yield self.subscribe(disable_scene_item, '{}.scene_item..remove'.format(PREFIX), {'match': 'wildcard'})
 
         """
         Measurements
