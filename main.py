@@ -49,8 +49,11 @@ class AppSession(ApplicationSession):
     @inlineCallbacks
     def onJoin(self, details):
         # User
-        yield self.register(get_user_by_cpf, '{}.user.cpf'.format(PREFIX))
         yield self.register(get_user, '{}.user.id'.format(PREFIX))
+        yield self.register(get_user_by_cpf, '{}.user.cpf'.format(PREFIX))
+        yield self.register(insert_user, '{}.user.create'.format(PREFIX))
+        yield self.register(edit_user, '{}.user.edit'.format(PREFIX))
+        yield self.register(delete_user, '{}.user.delete'.format(PREFIX))
         yield self.register(get_residences, '{}.user.residences'.format(PREFIX))
         # Residence
         yield self.register(get_residence_by_alias, '{}.residence.alias'.format(PREFIX))
