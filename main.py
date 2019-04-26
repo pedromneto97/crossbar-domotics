@@ -29,6 +29,7 @@
 from os import environ
 
 from autobahn.twisted.wamp import ApplicationSession
+from autobahn.wamp.types import SubscribeOptions
 from mongoengine import connect
 from twisted.internet.defer import inlineCallbacks
 from twisted.logger import Logger
@@ -64,8 +65,9 @@ class AppSession(ApplicationSession):
         """
         yield self.register(get_residence_by_alias, '{}.residence.alias'.format(PREFIX))
         yield self.register(create_residence, '{}.residence.create'.format(PREFIX))
-        yield self.subscribe(edit_residence, '{}.residence..edit'.format(PREFIX), {'match': 'wildcard'})
-        yield self.subscribe(add_user_to_residence, '{}.residence..add_user'.format(PREFIX), {'match': 'wildcard'})
+        yield self.subscribe(edit_residence, '{}.residence..edit'.format(PREFIX), SubscribeOptions(match='wildcard'))
+        yield self.subscribe(add_user_to_residence, '{}.residence..add_user'.format(PREFIX),
+                             SubscribeOptions(match='wildcard'))
         yield self.register(delete_residence, '{}.residence.delete'.format(PREFIX))
 
         """
@@ -73,19 +75,22 @@ class AppSession(ApplicationSession):
         """
         yield self.register(get_room_by_alias, '{}.room.alias'.format(PREFIX))
         # Uses residence ID to listen to new rooms in a residence (Only in create)
-        yield self.subscribe(insert_room, '{}.room..create', format(PREFIX), {'match': 'wildcard'})
-        yield self.subscribe(edit_room, '{}.room..edit', format(PREFIX), {'match': 'wildcard'})
+        yield self.subscribe(insert_room, '{}.room..create', format(PREFIX), SubscribeOptions(match='wildcard'))
+        yield self.subscribe(edit_room, '{}.room..edit', format(PREFIX), SubscribeOptions(match='wildcard'))
         yield self.subscribe(delete_room, '{}.room..delete'.format(PREFIX))
 
         """
         SceneItem topics
         """
-        yield self.subscribe(insert_scene_item, '{}.scene_item..create'.format(PREFIX), {'match': 'wildcard'})
-        yield self.subscribe(edit_scene_item, '{}.scene_item..edit'.format(PREFIX), {'match': 'wildcard'})
-        yield self.subscribe(disable_scene_item, '{}.scene_item..remove'.format(PREFIX), {'match': 'wildcard'})
+        yield self.subscribe(insert_scene_item, '{}.scene_item..create'.format(PREFIX),
+                             SubscribeOptions(match='wildcard'))
+        yield self.subscribe(edit_scene_item, '{}.scene_item..edit'.format(PREFIX), SubscribeOptions(match='wildcard'))
+        yield self.subscribe(disable_scene_item, '{}.scene_item..remove'.format(PREFIX),
+                             SubscribeOptions(match='wildcard'))
 
         """
         Measurements
         """
         yield self.register(get_last_measurement, '{}.measurement.last'.format(PREFIX))
-        yield self.subscribe(new_measurement, '{}.measurement..create'.format(PREFIX), {'match': 'wildcard'})
+        yield self.subscribe(new_measurement, '{}.measurement..create'.format(PREFIX),
+                             SubscribeOptions(match='wildcard'))
