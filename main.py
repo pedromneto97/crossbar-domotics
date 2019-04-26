@@ -77,7 +77,7 @@ class AppSession(ApplicationSession):
         # Uses residence ID to listen to new rooms in a residence (Only in create)
         yield self.subscribe(insert_room, '{}.room..create'.format(PREFIX), SubscribeOptions(match='wildcard'))
         yield self.subscribe(edit_room, '{}.room..edit'.format(PREFIX), SubscribeOptions(match='wildcard'))
-        yield self.subscribe(delete_room, '{}.room..delete'.format(PREFIX))
+        yield self.subscribe(delete_room, '{}.room..delete'.format(PREFIX), SubscribeOptions(match='wildcard'))
 
         """
         SceneItem topics
