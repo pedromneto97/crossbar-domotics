@@ -106,7 +106,7 @@ class AppSession(ApplicationSession):
         yield self.subscribe(edit_residence_type, '{}.residence_type..edit'.format(PREFIX), SubscribeOptions(match='wildcard'))
         yield self.register(remove_residence_type, '{}.residence_type.remove'.format(PREFIX))
 
-                """
+        """
         Room Type Topics
         """
         yield self.register(get_room_types, '{}.room_type.types'.format(PREFIX))
@@ -114,3 +114,13 @@ class AppSession(ApplicationSession):
         yield self.register(create_room_type, '{}.room_type.create'.format(PREFIX))
         yield self.subscribe(edit_room_type, '{}.room_type..edit'.format(PREFIX), SubscribeOptions(match='wildcard'))
         yield self.register(remove_room_type, '{}.room_type.remove'.format(PREFIX))
+
+        """
+        Scene Item Type Topics
+        """
+        yield self.register(get_scene_item_type_by_type, '{}.scene_item_type.type'.format(PREFIX))
+        yield self.register(insert_scene_item_type, '{}.scene_item_type.create'.format(PREFIX))
+        yield self.subscribe(edit_scene_item_type, '{}.scene_item_type..edit'.format(PREFIX), SubscribeOptions(match='wildcard'))
+        yield self.subscribe(add_pattern, '{}.scene_item_type..pattern.new'.format(PREFIX), SubscribeOptions(match='wildcard'))
+        yield self.subscribe(remove_pattern, '{}.scene_item_type..pattern.remove'.format(PREFIX), SubscribeOptions(match='wildcard'))
+        yield self.register(delete_scene_item_type, '{}.scene_item_type.remove'.format(PREFIX))
