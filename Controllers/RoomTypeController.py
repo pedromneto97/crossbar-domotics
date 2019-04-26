@@ -1,3 +1,4 @@
+from bson import json_util
 from typing import List
 
 from Models.RoomType import RoomType
@@ -21,7 +22,7 @@ def edit_room_type(_id: str, data: str):
     rt = RoomType.objects(_id=_id).first()
     data = json_util.loads(data)
     for key, item in data.items():
-        setattr(r, key, item)
+        setattr(rt, key, item)
     rt.save()
 
 
