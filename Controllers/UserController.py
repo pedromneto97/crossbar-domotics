@@ -2,6 +2,7 @@ from bson import json_util
 from mongoengine import DoesNotExist
 
 from Models.User import User
+from Models.Residence import Residence
 
 
 def get_user(id: str) -> User or None:
@@ -80,3 +81,7 @@ def edit_user(_id: str, data: str) -> bool:
 
 def delete_user(_id: str):
     User.objects(_id=_id).delete()
+
+def set_default_residence(user_id:str, residence_id:str):
+    r = Residence.objects(_id=residence_id, users=user_id).first()
+    User.objects(_id=user_id).update_one(set__default_residence=r)
