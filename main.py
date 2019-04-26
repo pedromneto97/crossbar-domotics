@@ -57,6 +57,10 @@ class AppSession(ApplicationSession):
         yield self.register(get_residences, '{}.user.residences'.format(PREFIX))
         # Residence
         yield self.register(get_residence_by_alias, '{}.residence.alias'.format(PREFIX))
+        yield self.register(create_residence, '{}.residence.create'.format(PREFIX))
+        yield self.subscribe(edit_residence, '{}.residence..edit'.format(PREFIX), {'match': 'wildcard'})
+        yield self.subscribe(add_user_to_residence, '{}.residence..add_user'.format(PREFIX))
+        yield self.register(delete_residence, '{}.residence.delete'.format(PREFIX))
         # Room
         yield self.register(get_room_by_alias, '{}.room.alias'.format(PREFIX))
         # Measurement
