@@ -38,7 +38,7 @@ def insert(username: str, name: str, password: str, cpf: str, email: str) -> boo
     return True
 
 
-def insert_json(json: str) -> bool:
+def insert_user(json: str) -> bool:
     user = User.from_json(json)
     user.password = User.encrypt(user.password, user.username)
     user.save()
