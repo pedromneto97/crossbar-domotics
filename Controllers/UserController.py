@@ -1,3 +1,4 @@
+from bson import json_util
 from mongoengine import DoesNotExist
 
 from Models.User import User
@@ -61,6 +62,19 @@ def update(id: str = None, username: str = None, name: str = None, password: str
     if email is not None:
         user.email = email
     user.save()
+    return True
+
+
+def edit_user(_id: str, data: str) -> bool:
+    r: User = User.objects(_id=_id).first()
+    data: dict = json_util.loads(data)
+    if ('username' in data and 'password' not in data) or ('username' not in data and 'password' in data):
+        return False
+    elif 'username' in data and 'password' in data:
+        data.update({'password': User.encrypt(data.get('password'), data.get('username'))})
+    for key, item in data.items():
+        setattr(r, key, item)
+    r.save()
     return True
 
 
