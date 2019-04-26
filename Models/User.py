@@ -2,6 +2,8 @@ import hashlib
 
 from mongoengine import *
 
+from Models.Residence import Residence
+
 
 class User(Document):
     username = StringField(required=True, unique=True)
@@ -9,6 +11,7 @@ class User(Document):
     password = StringField(required=True)
     cpf = StringField(required=True, unique=True)
     email = EmailField(required=True, unique=True)
+    default_residence = ReferenceField(Residence, reverse_delete_rule=PULL)
 
     @staticmethod
     def encrypt(password: str, salt: str = None) -> str:
