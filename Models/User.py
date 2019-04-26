@@ -9,7 +9,7 @@ class User(Document):
     password = StringField(required=True)
     cpf = StringField(required=True, unique=True)
     email = EmailField(required=True, unique=True)
-    default_residence = ReferenceField('residence', reverse_delete_rule=PULL)
+    default_residence = ObjectIdField(null=True)
 
     @staticmethod
     def encrypt(password: str, salt: str = None) -> str:
