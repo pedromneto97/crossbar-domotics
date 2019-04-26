@@ -26,11 +26,10 @@
 #
 ###############################################################################
 
-from os import environ
-
 from autobahn.twisted.wamp import ApplicationSession
 from autobahn.wamp.types import SubscribeOptions
 from mongoengine import connect
+from os import environ
 from twisted.internet.defer import inlineCallbacks
 from twisted.logger import Logger
 
@@ -40,6 +39,7 @@ from Controllers.ResidenceTypeController import *
 from Controllers.RoomController import *
 from Controllers.RoomTypeController import *
 from Controllers.SceneItemController import *
+from Controllers.SceneItemTypeController import *
 from Controllers.UserController import *
 
 PREFIX = 'com.herokuapp.crossbar-pedro'
