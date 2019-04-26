@@ -48,20 +48,28 @@ class AppSession(ApplicationSession):
 
     @inlineCallbacks
     def onJoin(self, details):
-        # User
+        """
+        Users topics
+        """
         yield self.register(get_user, '{}.user.id'.format(PREFIX))
         yield self.register(get_user_by_cpf, '{}.user.cpf'.format(PREFIX))
         yield self.register(insert_user, '{}.user.create'.format(PREFIX))
         yield self.register(edit_user, '{}.user.edit'.format(PREFIX))
         yield self.register(delete_user, '{}.user.delete'.format(PREFIX))
         yield self.register(get_residences, '{}.user.residences'.format(PREFIX))
-        # Residence
+
+        """
+        Residence Topics
+        """
         yield self.register(get_residence_by_alias, '{}.residence.alias'.format(PREFIX))
         yield self.register(create_residence, '{}.residence.create'.format(PREFIX))
         yield self.subscribe(edit_residence, '{}.residence..edit'.format(PREFIX), {'match': 'wildcard'})
         yield self.subscribe(add_user_to_residence, '{}.residence..add_user'.format(PREFIX))
         yield self.register(delete_residence, '{}.residence.delete'.format(PREFIX))
-        # Room
+
+        """
+        Rooms topics
+        """
         yield self.register(get_room_by_alias, '{}.room.alias'.format(PREFIX))
         # Measurement
         yield self.register(get_last_measurement, '{}.measurement.last'.format(PREFIX))
