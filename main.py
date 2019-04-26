@@ -38,6 +38,7 @@ from Controllers.MeasurementController import *
 from Controllers.ResidenceController import *
 from Controllers.ResidenceTypeController import *
 from Controllers.RoomController import *
+from Controllers.RoomTypeController import *
 from Controllers.SceneItemController import *
 from Controllers.UserController import *
 
@@ -104,3 +105,12 @@ class AppSession(ApplicationSession):
         yield self.register(create_residence_type, '{}.residence_type.create'.format(PREFIX))
         yield self.subscribe(edit_residence_type, '{}.residence_type..edit'.format(PREFIX), SubscribeOptions(match='wildcard'))
         yield self.register(remove_residence_type, '{}.residence_type.remove'.format(PREFIX))
+
+                """
+        Room Type Topics
+        """
+        yield self.register(get_room_types, '{}.room_type.types'.format(PREFIX))
+        yield self.register(get_room_type, '{}.room_type.type'.format(PREFIX))
+        yield self.register(create_room_type, '{}.room_type.create'.format(PREFIX))
+        yield self.subscribe(edit_room_type, '{}.room_type..edit'.format(PREFIX), SubscribeOptions(match='wildcard'))
+        yield self.register(remove_room_type, '{}.room_type.remove'.format(PREFIX))
