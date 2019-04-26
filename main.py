@@ -36,6 +36,7 @@ from twisted.logger import Logger
 
 from Controllers.MeasurementController import *
 from Controllers.ResidenceController import *
+from Controllers.ResidenceTypeController import *
 from Controllers.RoomController import *
 from Controllers.SceneItemController import *
 from Controllers.UserController import *
@@ -94,3 +95,12 @@ class AppSession(ApplicationSession):
         yield self.register(get_last_measurement, '{}.measurement.last'.format(PREFIX))
         yield self.subscribe(new_measurement, '{}.measurement..create'.format(PREFIX),
                              SubscribeOptions(match='wildcard'))
+
+        """
+        Residence Type Topics
+        """
+        yield self.register(get_residence_types, '{}.residence_type.types'.format(PREFIX))
+        yield self.register(get_residence_type, '{}.residence_type.type'.format(PREFIX))
+        yield self.register(create_residence_type, '{}.residence_type.create'.format(PREFIX))
+        yield self.subscribe(edit_residence_type, '{}.residence_type..edit'.format(PREFIX), SubscribeOptions(match='wildcard'))
+        yield self.register(remove_residence_type, '{}.residence_type.remove'.format(PREFIX))
