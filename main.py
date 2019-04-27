@@ -34,6 +34,7 @@ from mongoengine import connect
 from twisted.internet.defer import inlineCallbacks
 from twisted.logger import Logger
 
+from Controllers.Controller import *
 from Controllers.MeasurementController import *
 from Controllers.ResidenceController import *
 from Controllers.ResidenceTypeController import *
@@ -42,7 +43,6 @@ from Controllers.RoomTypeController import *
 from Controllers.SceneItemController import *
 from Controllers.SceneItemTypeController import *
 from Controllers.UserController import *
-from Domain.Controller import *
 
 PREFIX = 'com.herokuapp.crossbar-pedro'
 
