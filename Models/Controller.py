@@ -1,12 +1,12 @@
 from mongoengine import *
 
 from Models.ControllerType import ControllerType
-from Models.SceneItemType import SceneItemType
+from Models.SceneItem import SceneItem
 
 
 class Scene(EmbeddedDocument):
-    scene = ReferenceField(SceneItemType)
-    pins = ListField(IntField())
+    scene = ReferenceField(SceneItem, unique=True)
+    pins = ListField(IntField(min_value=0))
 
 
 class Controller(Document):
