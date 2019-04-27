@@ -5,7 +5,7 @@ from Models.SceneItem import SceneItem
 
 
 class Scene(EmbeddedDocument):
-    scene = ReferenceField(SceneItem, unique=True, reverse_delete_rule=PULL)
+    scene = ReferenceField(SceneItem, unique=True)
     pins = ListField(IntField(min_value=0))
 
 
