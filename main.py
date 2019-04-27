@@ -26,10 +26,11 @@
 #
 ###############################################################################
 
+from os import environ
+
 from autobahn.twisted.wamp import ApplicationSession
 from autobahn.wamp.types import SubscribeOptions
 from mongoengine import connect
-from os import environ
 from twisted.internet.defer import inlineCallbacks
 from twisted.logger import Logger
 
@@ -41,6 +42,7 @@ from Controllers.RoomTypeController import *
 from Controllers.SceneItemController import *
 from Controllers.SceneItemTypeController import *
 from Controllers.UserController import *
+from Domain.Controller import *
 
 PREFIX = 'com.herokuapp.crossbar-pedro'
 
@@ -103,7 +105,8 @@ class AppSession(ApplicationSession):
         yield self.register(get_residence_types, '{}.residence_type.types'.format(PREFIX))
         yield self.register(get_residence_type, '{}.residence_type.type'.format(PREFIX))
         yield self.register(create_residence_type, '{}.residence_type.create'.format(PREFIX))
-        yield self.subscribe(edit_residence_type, '{}.residence_type..edit'.format(PREFIX), SubscribeOptions(match='wildcard'))
+        yield self.subscribe(edit_residence_type, '{}.residence_type..edit'.format(PREFIX),
+                             SubscribeOptions(match='wildcard'))
         yield self.register(remove_residence_type, '{}.residence_type.remove'.format(PREFIX))
 
         """
@@ -120,7 +123,15 @@ class AppSession(ApplicationSession):
         """
         yield self.register(get_scene_item_type_by_type, '{}.scene_item_type.type'.format(PREFIX))
         yield self.register(insert_scene_item_type, '{}.scene_item_type.create'.format(PREFIX))
-        yield self.subscribe(edit_scene_item_type, '{}.scene_item_type..edit'.format(PREFIX), SubscribeOptions(match='wildcard'))
-        yield self.subscribe(add_pattern, '{}.scene_item_type..pattern.new'.format(PREFIX), SubscribeOptions(match='wildcard'))
-        yield self.subscribe(remove_pattern, '{}.scene_item_type..pattern.remove'.format(PREFIX), SubscribeOptions(match='wildcard'))
+        yield self.subscribe(edit_scene_item_type, '{}.scene_item_type..edit'.format(PREFIX),
+                             SubscribeOptions(match='wildcard'))
+        yield self.subscribe(add_pattern, '{}.scene_item_type..pattern.new'.format(PREFIX),
+                             SubscribeOptions(match='wildcard'))
+        yield self.subscribe(remove_pattern, '{}.scene_item_type..pattern.remove'.format(PREFIX),
+                             SubscribeOptions(match='wildcard'))
         yield self.register(delete_scene_item_type, '{}.scene_item_type.remove'.format(PREFIX))
+
+        """
+        Controller topics
+        """
+        yield self.register(get_config, '{}.controller.config'.format(PREFIX))
