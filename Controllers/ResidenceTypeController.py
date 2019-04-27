@@ -1,5 +1,6 @@
-from bson import json_util
 from typing import List
+
+from bson import json_util
 
 from Models.ResidenceType import ResidenceType
 
@@ -26,5 +27,5 @@ def edit_residence_type(_id: str, data: str):
     rt.save()
 
 
-def remove_residence_type(_id: str):
+def delete_residence_type(_id: str):
     ResidenceType.objects(_id=_id).delete()

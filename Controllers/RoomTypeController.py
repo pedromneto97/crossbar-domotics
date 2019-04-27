@@ -1,5 +1,6 @@
-from bson import json_util
 from typing import List
+
+from bson import json_util
 
 from Models.RoomType import RoomType
 
@@ -26,5 +27,5 @@ def edit_room_type(_id: str, data: str):
     rt.save()
 
 
-def remove_room_type(_id: str):
+def delete_room_type(_id: str):
     RoomType.objects(_id=_id).delete()
