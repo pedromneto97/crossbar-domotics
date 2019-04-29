@@ -16,7 +16,7 @@ class Address(EmbeddedDocument):
 
 class Residence(Document):
     users = ListField(ReferenceField(User, reverse_delete_rule=PULL), required=True)
-    rooms = ListField(ReferenceField(Room, reverse_delete_rule=PULL), required=True, unique=True)
+    rooms = ListField(ReferenceField(Room, reverse_delete_rule=PULL), unique=True)
     type = ReferenceField(ResidenceType, reverse_delete_rule=DENY, required=True)
     name = StringField(required=True)
     address = EmbeddedDocumentField(Address, required=True)
