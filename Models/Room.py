@@ -8,5 +8,5 @@ class Room(Document):
     type = ReferenceField(RoomType, reverse_delete_rule=DENY, required=True)
     name = StringField(required=True)
     scenes = ListField(ReferenceField(SceneItem, reverse_delete_rule=PULL), unique=True)
-    icon = StringField(required=True)
+    icon = StringField()
     alias = StringField(required=True, unique=True)
