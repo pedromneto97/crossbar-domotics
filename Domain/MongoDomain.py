@@ -38,3 +38,11 @@ def group(tuple_array: List[Tuple[str, str, str]], _id='$_id') -> dict:
             }
         })
     return gp
+
+
+def match(key: str, value: str) -> dict:
+    return {
+        '$match': {
+            key: value
+        }
+    }
