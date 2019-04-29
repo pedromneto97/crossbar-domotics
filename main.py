@@ -107,7 +107,7 @@ class AppSession(ApplicationSession):
         yield self.register(create_residence_type, '{}.residence_type.create'.format(PREFIX))
         yield self.subscribe(edit_residence_type, '{}.residence_type..edit'.format(PREFIX),
                              SubscribeOptions(match='wildcard'))
-        yield self.register(remove_residence_type, '{}.residence_type.remove'.format(PREFIX))
+        yield self.register(delete_residence_type, '{}.residence_type.remove'.format(PREFIX))
 
         """
         Room Type Topics
@@ -116,7 +116,7 @@ class AppSession(ApplicationSession):
         yield self.register(get_room_type, '{}.room_type.type'.format(PREFIX))
         yield self.register(create_room_type, '{}.room_type.create'.format(PREFIX))
         yield self.subscribe(edit_room_type, '{}.room_type..edit'.format(PREFIX), SubscribeOptions(match='wildcard'))
-        yield self.register(remove_room_type, '{}.room_type.remove'.format(PREFIX))
+        yield self.register(delete_room_type, '{}.room_type.remove'.format(PREFIX))
 
         """
         Scene Item Type Topics
