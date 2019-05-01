@@ -40,7 +40,17 @@
           "paths": {
             "/": {
               "type": "static",
-              "directory": "../web"
+              "directory": "../web",
+              "options": {
+                "default_file": "index.html"
+              }
+            },
+            "admin": {
+              "type": "static",
+              "directory": "../web",
+              "options": {
+                "default_file": "index.html"
+              }
             },
             "ws": {
               "type": "websocket"
