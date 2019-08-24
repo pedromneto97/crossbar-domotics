@@ -59,6 +59,11 @@
               "type": "publisher",
               "realm": "realm1",
               "role": "anonymous"
+            },
+            "call": {
+              "type": "caller",
+              "realm": "realm1",
+              "role": "anonymous"
             }
           }
         },
