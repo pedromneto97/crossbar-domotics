@@ -20,7 +20,7 @@ class AuthenticatorSession(ApplicationSession):
             user = User.objects(username=authid).first()
             if user:
                 return {
-                    'authid': user.email,
+                    'authid': str(user.id),
                     'secret': user.password,
                     'role': 'frontend',
                     'salt': user.username,
