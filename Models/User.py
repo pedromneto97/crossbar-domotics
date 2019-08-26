@@ -1,4 +1,4 @@
-import hashlib
+from autobahn.wamp.auth import derive_key
 
 from mongoengine import *
 
@@ -12,12 +12,5 @@ class User(Document):
     default_residence = ObjectIdField(null=True)
 
     @staticmethod
-    def encrypt(password: str, salt: str = None) -> str:
-        a = hashlib.sha1()
-        b = hashlib.sha1()
-        a.update(password.encode('utf-8'))
-        aux = ''
-        if salt is not None:
-            aux = salt
-        b.update((str(a.hexdigest()) + aux).encode('utf-8'))
-        return str(b.hexdigest())
+    def encrypt(password: str, salt: str = None) -> bytes:
+        return derive_key(password, salt)
