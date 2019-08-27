@@ -29,7 +29,7 @@
 from os import environ
 
 from autobahn.twisted.wamp import ApplicationSession
-from autobahn.wamp.types import SubscribeOptions
+from autobahn.wamp.types import SubscribeOptions, RegisterOptions
 from mongoengine import connect
 from twisted.internet.defer import inlineCallbacks
 from twisted.logger import Logger
@@ -62,7 +62,7 @@ class AppSession(ApplicationSession):
         yield self.register(insert_user, '{}.user.create'.format(PREFIX))
         yield self.register(edit_user, '{}.user.edit'.format(PREFIX))
         yield self.register(delete_user, '{}.user.delete'.format(PREFIX))
-        yield self.register(get_residences, '{}.user.residences'.format(PREFIX))
+        yield self.register(get_residences, '{}.user.residences'.format(PREFIX), RegisterOptions(details_arg="details"))
 
         """
         Residence Topics

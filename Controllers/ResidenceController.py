@@ -1,3 +1,4 @@
+from autobahn.wamp import CallDetails
 from bson import json_util
 
 from Domain.MongoDomain import *
@@ -5,7 +6,8 @@ from Models.Residence import Residence
 from Models.User import User
 
 
-def get_residences(user_id: str, with_city: bool = True, with_type: bool = True) -> List[Residence]:
+def get_residences(with_city: bool = True, with_type: bool = True, **kwargs) -> List[Residence]:
+    details = kwargs.get('details')  # type: CallDetails
     pipeline = []
     if with_type:
         pipeline.append(lookup('residence_type', 'type'))
@@ -14,8 +16,8 @@ def get_residences(user_id: str, with_city: bool = True, with_type: bool = True)
         pipeline.append(lookup('address', 'address.postal_code'))
         pipeline.append(unwind('$address.postal_code'))
     if with_type or with_city:
-        return json_util.dumps(Residence.objects(users=user_id).aggregate(*pipeline))
-    return Residence.objects(users=user_id).to_json()
+        return json_util.dumps(Residence.objects(users=details.caller_authid).aggregate(*pipeline))
+    return Residence.objects(users=details.caller_authid).to_json()
 
 
 def get_residence(_id: str) -> Residence or None:
