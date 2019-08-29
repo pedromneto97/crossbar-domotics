@@ -66,6 +66,41 @@
                   "cache": true
                 }
               ]
+            },
+            {
+              "name": "controller",
+              "permissions": [
+                {
+                  "uri": "com.herokuapp.crossbar-pedro.measurement",
+                  "match": "prefix",
+                  "allow": {
+                    "call": false,
+                    "register": false,
+                    "publish": true,
+                    "subscribe": false
+                  },
+                  "disclose": {
+                    "caller": false,
+                    "publisher": false
+                  },
+                  "cache": true
+                },
+                {
+                  "uri": "com.herokuapp.crossbar-pedro.actuator",
+                  "match": "prefix",
+                  "allow": {
+                    "call": true,
+                    "register": false,
+                    "publish": false,
+                    "subscribe": false
+                  },
+                  "disclose": {
+                    "caller": false,
+                    "publisher": false
+                  },
+                  "cache": true
+                }
+              ]
             }
           ]
         }
@@ -104,12 +139,12 @@
             "publish": {
               "type": "publisher",
               "realm": "realm1",
-              "role": "anonymous"
+              "role": "controller"
             },
             "call": {
               "type": "caller",
               "realm": "realm1",
-              "role": "anonymous"
+              "role": "controller"
             }
           }
         },
