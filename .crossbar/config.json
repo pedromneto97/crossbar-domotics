@@ -71,7 +71,7 @@
               "name": "controller",
               "permissions": [
                 {
-                  "uri": "com.herokuapp.crossbar-pedro.measurement",
+                  "uri": "com.herokuapp.crossbarpedro.measurement",
                   "match": "prefix",
                   "allow": {
                     "call": false,
@@ -86,7 +86,7 @@
                   "cache": true
                 },
                 {
-                  "uri": "com.herokuapp.crossbar-pedro.actuator",
+                  "uri": "com.herokuapp.crossbarpedro.actuator",
                   "match": "prefix",
                   "allow": {
                     "call": true,

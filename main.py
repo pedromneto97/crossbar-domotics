@@ -44,7 +44,7 @@ from Controllers.SceneItemController import *
 from Controllers.SceneItemTypeController import *
 from Controllers.UserController import *
 
-PREFIX = 'com.herokuapp.crossbar-pedro'
+PREFIX = 'com.herokuapp.crossbarpedro'
 
 
 class AppSession(ApplicationSession):
