@@ -24,6 +24,21 @@
                     "publisher": false
                   },
                   "cache": true
+                },
+                {
+                  "uri": "ticket",
+                  "match": "exact",
+                  "allow": {
+                    "call": false,
+                    "register": true,
+                    "publish": false,
+                    "subscribe": false
+                  },
+                  "disclose": {
+                    "caller": false,
+                    "publisher": false
+                  },
+                  "cache": true
                 }
               ]
             },
@@ -133,6 +148,10 @@
                 "wampcra": {
                   "type": "dynamic",
                   "authenticator": "authenticate"
+                },
+                "ticket": {
+                  "type": "dynamic",
+                  "authenticator": "ticket"
                 }
               }
             },
@@ -158,6 +177,10 @@
             "wampcra": {
               "type": "dynamic",
               "authenticator": "authenticate"
+            },
+            "ticket": {
+              "type": "dynamic",
+              "authenticator": "ticket"
             }
           }
         }

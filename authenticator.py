@@ -36,3 +36,21 @@ class AuthenticatorSession(ApplicationSession):
             print("WAMP-CRA dynamic authenticator registered!")
         except Exception as e:
             print("Failed to register dynamic authenticator: {0}".format(e))
+
+        def authenticate_ticket(realm, authid, details):
+            ticket = details.get('ticket')
+            print(
+                "WAMP-Ticket dynamic authenticator invoked: realm='{}', authid='{}', ticket='{}'".format(realm, authid,
+                                                                                                         ticket))
+            user = User.objects(id=ticket).first()
+            if user:
+                return 'controller'
+            else:
+                raise ApplicationError(u'com.example.no_such_user',
+                                       'could not authenticate session - no such user {}'.format(authid))
+
+        try:
+            yield self.register(authenticate_ticket, u'ticket')
+            print("WAMP-TICKET dynamic authenticator registered!")
+        except Exception as e:
+            print("Failed to register dynamic authenticator: {0}".format(e))
